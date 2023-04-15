@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Chart</title>
+	<link rel="stylesheet" href="./chart.css">
+</head>
+<body>
+
+	<div id="container">
+		<div id="wrap">
+		 <h2>Discharges 
+			 <span>Now</span>
+		 </h2>
+		</div>
+		<div>
+		 <p id="line"></p>
+		 <span id="kpi">KPI: 02:00</span>
+		</div>
+		 <div id="chart">
+		 </div>
+	 </div>
+
+
+
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+	<script>
+	var options = {
+  series: [{
+    name: 'Discharges By Interval',
+    type: 'bar',
+    data: [
+      {x: '12AM - 06AM', y:0},
+      {x: '06AM - 08AM',y:1},
+      {x:'08AM - 10AM',y:16},
+      {x:'10AM - 12PM',y:11},
+      {x:'12PM - 02PM',y:5},
+      {x:'02PM - 04PM',y:2},
+      {x:'04PM - 06PM',y:0},
+      {x:'06PM - 08PM',y:0},
+      {x:'08PM - 10PM',y:0},
+      {x:'10PM - 12AM',y:0},
+    ]
+  }, {
+    name: 'Avg Time',
+    type: 'line',
+    data: [
+      {x: '12AM - 06AM',y:0},
+      {x: '06AM - 08AM',y:3600},
+      {x:'08AM - 10AM',y:57600},
+      {x:'10AM - 12PM',y:39600},
+      {x:'12PM - 02PM',y:18000},
+      {x:'02PM - 04PM',y:7200},
+      {x:'04PM - 06PM',y:0},
+      {x:'06PM - 08PM',y:0},
+      {x:'08PM - 10PM',y:0},
+      {x:'10PM - 12AM',y:0},
+    ]
+  }],
+  chart: {
+    height: 350,
+    type: 'line',
+    stacked: false
+  },
+  dataLabels: {
+    enabled: true
+  },
+  markers: {
+    size: 0
+  },
+  xaxis: {
+    type: 'category'
+  },
+  
+  colors: ['#f7c7cd', '#615d8b'],
+  
+  yaxis: [{
+    seriesName: 'Discharges By Interval',
+    labels: {
+      formatter: function (value) {
+        var minutes = Math.floor(value / 60);
+        var hours = Math.floor(minutes / 60);
+        minutes = minutes % 60;
+		// console.log(hours.toString().padStart(2))
+        return hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
+      }
+    }
+  }, {
+    seriesName: 'Avg Time',
+    opposite: true
+  }
+],
+
+
+
+
+
+  stroke: {
+    width: [1, 4]
+  },
+
+  plotOptions: {
+    bar: {
+      columnWidth: "40%",
+	  dataLabels: {
+		position: 'bottom',
+		
+	  },
+	  
+    }
+
+  },
+
+  grid: {
+    yaxis: {
+        lines: {
+            show: false
+        }
+    },  
+},
+
+  legend: {
+    show: true,
+    position: 'bottom',
+    horizontalAlign: 'center',
+    labels: {
+      useSeriesColors: true
+    },
+    markers: {
+      size: 0
+    }
+  },
+
+  
+};
+
+var chart = new ApexCharts(document.querySelector("#chart"), options);
+chart.render();
+
+
+</script>
+
+</body>
+</html>
